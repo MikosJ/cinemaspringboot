@@ -2,6 +2,7 @@ package cinema;
 
 import lombok.Data;
 
+
 @Data
 public class ReturnedTicket {
     Seat returnedTicket;
@@ -10,7 +11,9 @@ public class ReturnedTicket {
         this.returnedTicket = ticket.getTicketSeat();
     }
 
-    ReturnedTicket() {}
+
+    ReturnedTicket() {
+    }
 
 
 }

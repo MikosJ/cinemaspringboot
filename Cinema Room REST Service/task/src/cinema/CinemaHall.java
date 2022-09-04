@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ public class CinemaHall {
     private int totalColumns;
     private List<Seat> availableSeats;
     private List<Ticket> availableTickets;
+
 
     CinemaHall(int totalRows, int totalColumns) {
         this.totalRows = totalRows;
@@ -28,22 +30,52 @@ public class CinemaHall {
         }
     }
 
+    CinemaHall(int totalRows, int totalColumns, List<Seat> availableSeats, List<Ticket> availableTickets) {
+        this.totalRows = totalRows;
+        this.totalColumns = totalColumns;
+        this.availableSeats = new ArrayList<>();
+        this.availableTickets = new ArrayList<>();
+        for (Seat seat :
+                availableSeats) {
+            if (!seat.isTaken()) {
+                this.availableSeats.add(seat);
+            }
+        }
+        this.availableTickets = availableTickets;
+    }
+
 
     @JsonIgnore
     public List<Ticket> getAvailableTickets() {
         return availableTickets;
     }
 
+
+    public List<Seat> getAvailableSeats() {
+        return availableSeats;
+    }
+
     public Ticket getSingleTicket(Seat seat) {
         return this.availableTickets.get(this.availableSeats.indexOf(seat));
     }
 
-    public void makeTicketTaken(Ticket ticket, boolean taken) {
-        for (Ticket tickets : this.availableTickets) {
-            if (ticket.equals(tickets)) {
-                tickets.getTicketSeat().setTaken(taken);
+    public void setTaken(Seat seat, boolean taken) {
+        this.availableSeats.get(this.availableSeats.indexOf(seat)).setTaken(taken);
+    }
+
+    public void setTaken(Ticket ticket, boolean taken) {
+        this.availableSeats.get(this.availableTickets.indexOf(ticket)).setTaken(taken);
+    }
+
+    public Ticket getSingleTicket(UUID token) {
+        Ticket result = null;
+        for (Ticket ticket : this.availableTickets) {
+            if (ticket.getToken().equals(token)) {
+                result = this.availableTickets.get(this.availableTickets.indexOf(ticket));
             }
         }
+        return result;
 
     }
+
 }

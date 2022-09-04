@@ -18,7 +18,8 @@ public class Seat {
         this.price = row >= 4 ? 8 : 10;
     }
 
-    Seat() {}
+    Seat() {
+    }
 
     @JsonIgnore
     public boolean isTaken() {
@@ -29,6 +30,9 @@ public class Seat {
         isTaken = taken;
     }
 
+    public void setPrice() {
+        this.price = row >= 4 ? 8 : 10;
+    }
 
     public Integer getColumn() {
         return column;

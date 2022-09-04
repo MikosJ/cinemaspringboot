@@ -24,7 +24,7 @@ public class Ticket {
         return ticket;
     }
 
-    //Return seat data and token when given a seat
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
